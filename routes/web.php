@@ -104,4 +104,15 @@ Route::post('coordinador/eliminar/incidencia/{id}', 'incidenciasController@destr
 Route::get('coordinador/insertar/incidencia/{id}','incidenciasController@getHandling')->middleware('auth', 'role:admin');
 Route::get('coordinador/insertar/incidencia/causante/{id}','incidenciasController@getCausante')->middleware('auth', 'role:admin');
 Route::get('coordinador/insertar/incidencia/tipo/{id}','incidenciasController@getTipoCausante')->middleware('auth', 'role:admin');
-Route::get('coordinador/insertar/usuario','Auth\RegisterController@create')->middleware('auth', 'role:admin');
+//Usuarios
+Route::get('coordinador/insertar/usuario','UserController@getCreate')->middleware('auth', 'role:admin');
+Route::post('coordinador/insertar/usuario','UserController@create')->middleware('auth', 'role:admin');
+//listar
+Route::get('coordinador/listar/usuario', 'UserController@getIndex')->middleware('auth', 'role:admin');
+//Deshabilitar
+Route::put('coordinador/deshabilitar/usuario/{id}', 'UserController@putDisable')->middleware('auth', 'role:admin');
+//Habilitar
+Route::put('coordinador/habilitar/usuario/{id}', 'UserController@putEnable')->middleware('auth', 'role:admin');
+//Modificar
+Route::get('coordinador/modificar/usuario/{id}', 'UserController@getEdit')->middleware('auth', 'role:admin');
+Route::put('coordinador/modificar/usuario/{id}', 'UserController@putEdit')->middleware('auth', 'role:admin');

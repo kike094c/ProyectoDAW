@@ -9,7 +9,7 @@
 <body>
   <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <!-- Brand -->
-  <a class="navbar-brand" href="#">UCAGESTION</a>
+  <a class="navbar-brand" href="/home">UCAGESTION</a>
 
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -69,7 +69,7 @@
       Administración
     </a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="/coordinador/insertar/usuario">Usuarios</a>
+      <a class="dropdown-item" href="/coordinador/listar/usuario">Usuarios</a>
       <a class="dropdown-item" href="#">Informes</a>
     </div>
   </li>
