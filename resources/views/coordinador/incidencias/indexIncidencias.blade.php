@@ -5,8 +5,6 @@
   </div>
 <?php endif; ?>
 </br>
-<div class="container col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>Listado de Incidencias</h2>
             </div>
@@ -32,6 +30,8 @@
                             <th scope="row">
                               <a role="button" class="btn btn-success" href="/coordinador/insertar/incidencia">Añadir</a>
                             </th>
+                            <th scope="row"></th>
+                            <th scope="row"></th>
 
                         </tr>
                     </thead>
@@ -50,8 +50,14 @@
                                 <td>{!! $incidencia->nTarjeta !!}</td>
                                 <td>{!! $incidencia->observaciones !!}</td>
                                 <td>{!! $incidencia->solucion !!}</td>
-
                                 <td></td>
+                                <td></td>
+                                <td>
+                                    <div>
+                                        <a href="{{ url('/coordinador/modificar/incidencia/'.$incidencia->id)}}" class="btn btn-info" role="button">Modificar</a>
+                                    </div>
+                                  </form>
+                                </td>
                             <td>
                               <div>
                                 <form method="post" action="/coordinador/eliminar/incidencia/{!!$incidencia->id!!}" class="pull-left">
@@ -66,6 +72,4 @@
                     </tbody>
                 </table>
             @endif
-        </div>
-    </div>
 @include('footer')

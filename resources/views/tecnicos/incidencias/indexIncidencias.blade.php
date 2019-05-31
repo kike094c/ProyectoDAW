@@ -5,8 +5,6 @@
   </div>
 <?php endif; ?>
 </br>
-<div class="container col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>Listado de Incidencias</h2>
             </div>
@@ -57,7 +55,5 @@
                     </tbody>
                 </table>
             @endif
-        </div>
-    </div>
   </br>
 @include('footer')

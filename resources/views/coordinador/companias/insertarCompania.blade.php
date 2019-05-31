@@ -1,7 +1,7 @@
 @include('headCoordinador')
 </br>
 <div class="panel-heading">
-    <h2>Insertar Nuevo Handlings</h2>
+    <h2>Insertar Nueva Compañía</h2>
 </div>
 <form method="post" action="/coordinador/insertar/compania" enctype="multipart/form-data">
   {{csrf_field()}}

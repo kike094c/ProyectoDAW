@@ -10,8 +10,10 @@ use App\Compania;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 Route::get('/home', 'HomeController@index');
+
 //rutas para técnicos
 //Incidencias tecnicos
 //insertar
@@ -27,9 +29,13 @@ Route::get('tecnico/insertar/incidencia/tipo/{id}','incidenciasController@getTip
 //Rustas para coordinador
 
 //Incidencias
+//insertar
 Route::get('/coordinador/insertar/incidencia', function () {
     return view('/coordinador/insertincidencias');
 })->middleware('auth', 'role:admin');
+//Modificar
+Route::get('coordinador/modificar/incidencia/{id}', 'IncidenciasController@getEdit')->middleware('auth', 'role:admin');
+Route::put('coordinador/modificar/incidencia/{id}', 'IncidenciasController@putEdit')->middleware('auth', 'role:admin');
 
 //handlings Coordinador
 //insertar
@@ -87,8 +93,6 @@ Route::put('coordinador/habilitar/causante/{id}', 'CausantesController@putEnable
 Route::get('coordinador/modificar/causante/{id}', 'CausantesController@getEdit')->middleware('auth', 'role:admin');
 Route::put('coordinador/modificar/causante/{id}', 'CausantesController@putEdit')->middleware('auth', 'role:admin');
 //Relacionar
-Route::get('coordinador/relacionar/causante', 'CausantesController@getRelation')->middleware('auth', 'role:admin');
-Route::post('coordinador/relacionar/causante', 'CausantesController@postRelation')->middleware('auth', 'role:admin');
 Route::get('coordinador/listar/relacion/causante', 'CausantesController@getIndexRelation')->middleware('auth', 'role:admin');
 
 
@@ -116,3 +120,7 @@ Route::put('coordinador/habilitar/usuario/{id}', 'UserController@putEnable')->mi
 //Modificar
 Route::get('coordinador/modificar/usuario/{id}', 'UserController@getEdit')->middleware('auth', 'role:admin');
 Route::put('coordinador/modificar/usuario/{id}', 'UserController@putEdit')->middleware('auth', 'role:admin');
+
+Route::get('coordinador/administracion/informe/generar', 'ChartController@getIndex')->middleware('auth', 'role:admin');
+Route::post('coordinador/administracion/informe', 'ChartController@index')->middleware('auth', 'role:admin');
+//Route::get('coordinador/administracion/informe', 'ChartController@index')->middleware('auth', 'role:admin');

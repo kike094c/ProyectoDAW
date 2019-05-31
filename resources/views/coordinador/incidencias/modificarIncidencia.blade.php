@@ -1,20 +1,26 @@
-@include('head')
+@include('headCoordinador')
 </br>
-<form method="post" action="/tecnico/insertar/incidencia" enctype="multipart/form-data">
-  {!! csrf_field() !!}
+<?php if ($resultado!=""):?>
+  <div class="alert alert-success" role="alert">
+    <center>{{$resultado}}</center>
+  </div>
+<?php endif; ?>
+<form method="post" action="/coordinador/modificar/incidencia/{{$id}}" enctype="multipart/form-data">
+  {{method_field('PUT')}}
+  {{csrf_field()}}
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="fecha1">Fecha y Hora de inicio</label>
-      <input type="datetime-local" class="form-control" name="fecha1" id="fecha1" required>
+      <input type="datetime-local" class="form-control" name="fecha1" id="fecha1" value="{{$incidencia->fechaHoraInicio}}">
     </div>
     <div class="form-group col-md-4">
       <label for="fecha2">Fecha y Hora de fin</label>
-      <input type="datetime-local" class="form-control" name="fecha2" id="fecha2" required>
+      <input type="datetime-local" class="form-control" name="fecha2" id="fecha2" value="{{$incidencia->fechaHoraFin}}">
     </div>
     <div class="form-group col-md-4">
-      <label for="ubicacion">Mostrador/Puerta/Tránsito</label>
-      <select class="form-control" id="ubicacion" name="ubicacion" required>
-        <option value="">Selecciona ubicación</option>
+      <label for="ubicacion">Mostrador/Puerta</label>
+      <select class="form-control" id="ubicacion" name="ubicacion" >
+        <option value="{{$incidencia->ubicacion}}">{!! $incidencia->ubicacion !!}</option>
         <option value="M02">Mostrador 2</option>
         <option value="M03">Mostrador 3</option>
         <option value="M04">Mostrador 4</option>
@@ -107,29 +113,29 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="" class="control-label">Compañía</label>
-        <select class="form-control" id="compania" name="compania" required>
-          <option value="">Selecciona compañía</option>
+        <select class="form-control" id="compania" name="compania">
+          <option value="{{$ncompania}}">{!! $ncompania !!}</option>
             @foreach($companias as $compania)
-            <option value="{{$compania->id}}">{{$compania->nombre}}</option>
+            <option value="{{$compania->nombre}}">{{$compania->nombre}}</option>
             @endforeach
         </select>
           </div>
           <div class="form-group col-md-4">
             <label for="" class="control-label">Handling</label>
-            <select class="form-control" id="handling" name="handling" required>
-              <option value="">Selecciona handling</option>
+            <select class="form-control" id="handling" name="handling" >
+              <option value="{{$incidencia->handling}}">{!! $incidencia->handling !!}</option>
             </select>
             </div>
           <div class="form-group col-md-4">
             <label for="" class="control-label">Acreditación</label>
-              <input type="text" class="form-control" id="tarjeta" name="tarjeta" required>
+              <input type="text" class="form-control" id="tarjeta" name="tarjeta" value="{{$incidencia->nTarjeta}}">
           </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="inputTipoIncidencia">Tipo de incidenca</label>
-        <select class="form-control" id="tipoIncidencia" name="tipoIncidencia" required>
-          <option value="">Selecciona Tipo Incidencia</option>
+        <select class="form-control" id="tipoIncidencia" name="tipoIncidencia">
+          <option value="{{$incidencia->tipoIncidencia}}">{!! $incidencia->tipoIncidencia !!}</option>
           <option value="hdw">HARDWARE</option>
           <option value="sfw">SOFTWARE</option>
           <option value="usr">USUARIO</option>
@@ -137,32 +143,32 @@
       </div>
       <div class="form-group col-md-4">
         <label for="inputCausante">Causante</label>
-        <select class="form-control" id="causante" name="causante" required>
-          <option>Selecciona causante</option>
+        <select class="form-control" id="causante" name="causante" >
+          <option value="{{$idcausante}}">{!! $incidencia->causante !!}</option>
         </select>
       </div>
       <div class="form-group col-md-4">
         <label for="inputTipoCausante">Tipo Causante</label>
-        <select class="form-control" id="tipoCausante" name="tipoCausante" required>
-          <option value="">Selecciona tipo causante</option>
+        <select class="form-control" id="tipoCausante" name="tipoCausante">
+          <option value="{{$idtipo}}">{!! $ntipo !!}</option>
         </select>
       </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="observaciones">Observaciones</label>
-      <textarea class="form-control" rows="5" id="observaciones" name="observaciones" required></textarea>
+      <textarea class="form-control" rows="5" id="observaciones" name="observaciones">{!! $incidencia->observaciones !!}</textarea>
     </div>
     <div class="form-group col-md-6">
       <label for="solucion">Solución</label>
-      <textarea class="form-control" rows="5" id="solucion" name="solucion" required></textarea>
+      <textarea class="form-control" rows="5" id="solucion" name="solucion">{!! $incidencia->solucion !!}</textarea>
     </div>
   </div>
   <center>
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="{{ url('/tecnico/listar/incidencia/')}}" class="btn btn-secondary" role="button">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Modificar</button>
+    <a href="{{ url('/coordinador/listar/incidencia/')}}" class="btn btn-secondary" role="button">Cancelar</a>
   </center>
 </form>
 {!! Html::script('js/jquery-2.1.0.min.js') !!}
-{!! Html::script('js/dropdown2.js') !!}
+{!! Html::script('js/dropdown.js') !!}
 @include('footer')

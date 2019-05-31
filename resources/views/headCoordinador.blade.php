@@ -26,8 +26,6 @@
       <div class="dropdown-menu">
         <a class="dropdown-item" href="/coordinador/insertar/incidencia">Insertar</a>
         <a class="dropdown-item" href="/coordinador/listar/incidencia">Listar</a>
-        <a class="dropdown-item" href="#">Modificar</a>
-        <a class="dropdown-item" href="#">Eliminar</a>
       </div>
     </li>
     <li class="nav-item dropdown">
@@ -60,7 +58,6 @@
       <li><a class="dropdown-item" href="/coordinador/listar/tipo">Listar</a></li>
       <li class="divider"></li>
       <li class="dropdown-header">Relaciones</li>
-      <li><a class="dropdown-item" href="/coordinador/relacionar/causante">Relacionar</a></li>
       <li><a class="dropdown-item" href="/coordinador/listar/relacion/causante">Listar Relación</a></li>
     </ul>
   </div>
@@ -70,7 +67,7 @@
     </a>
     <div class="dropdown-menu">
       <a class="dropdown-item" href="/coordinador/listar/usuario">Usuarios</a>
-      <a class="dropdown-item" href="#">Informes</a>
+      <a class="dropdown-item" href="/coordinador/administracion/informe/generar">Informes</a>
     </div>
   </li>
     </ul>

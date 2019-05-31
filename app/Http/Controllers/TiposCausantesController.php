@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TiposCausante;
+use App\TiposyCausante;
+use App\Causante;
 
 class TiposCausantesController extends Controller
 {
@@ -15,8 +17,10 @@ class TiposCausantesController extends Controller
   }
   //Obtiene el formulario de inserción de handling
   public function getCreate(){
+    $caus = Causante::all()->sortBy('nombre');
+    $tipos = TiposyCausante::all()->sortBy('nombreCausante');
     $resultado="";
-    return View('/coordinador/causantes/tiposCausantes/insertarTipos', compact('resultado'));
+    return View('/coordinador/causantes/tiposCausantes/insertarTipos', compact('resultado','caus','tipos'));
   }
   //Inserta el nuevo handling con un id autoincremental y
   //retorna la vista del listado de handlings creados
@@ -26,9 +30,19 @@ class TiposCausantesController extends Controller
     $tipo->estado = "e";
     $tipo->save();
     $insertedId = $tipo->id;
-    $resultado="Tipo causante insertado con éxito";
-    $tipos = TiposCausante::all();
-    return View('/coordinador/causantes/tiposCausantes/indexTipos', compact('resultado','tipos'));
+    $tipo2 = new TiposyCausante;
+    $tipoCausante = TiposCausante::all()->last();
+    $tipo2->tipoCausante_id = $tipoCausante->id;
+    $tipo2->nombreTipo = $tipoCausante->nombre;
+    $causante = Causante::findOrFail($request->causante);
+    $tipo2->causante_id = $request->causante;
+    $tipo2->nombreCausante = $causante->nombre;
+    $tipo2->save();
+    $insertedId = $tipo2->id;
+    $resultado="Tipo Causante insertado y relacionado con éxito";
+    $tipos = TiposyCausante::all()->sortBy('nombreCausante');
+    $caus = Causante::all()->sortBy('nombre');
+    return View('/coordinador/causantes/tiposCausantes/insertarTipos', compact('resultado','tipos','caus'));
   }
   //modifica el valor de estado de la base de datos para deshabilitar el usuario
   public function putDisable(Request $request, $id){

@@ -80,22 +80,4 @@ class CausantesController extends Controller
     $resultado="Causante Modificado con éxito";
     return View('/coordinador/causantes/indexCausantes', compact('resultado','causantes'));
   }
-
-  //relaciona un causante con un tipo de causante y
-  //retorna la vista del listado de asociados
-  public function postRelation(Request $request){
-    $tipo = new TiposyCausante;
-    $tipoCausante = TiposCausante::findOrFail($request->tipo);
-    $tipo->tipoCausante_id = $tipoCausante->id;
-    $tipo->nombreTipo = $tipoCausante->nombre;
-    $causante = Causante::findOrFail($request->causante);
-    $tipo->causante_id = $request->causante;
-    $tipo->nombreCausante = $causante->nombre;
-    $tipo->save();
-    $insertedId = $tipo->id;
-    $resultado="Causante relacionado con éxito";
-    $tipos = TiposyCausante::all();
-    $causantes = Causante::all();
-    return View('/coordinador/causantes/tiposCausantes/indexRelacion', compact('resultado','tipos','causantes'));
-  }
 }

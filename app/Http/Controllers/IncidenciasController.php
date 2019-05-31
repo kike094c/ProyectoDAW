@@ -53,7 +53,7 @@ class IncidenciasController extends Controller
 
   public function getTipoCausante(Request $request, $id){
         if($request->ajax()){
-          $tiposCausantes = TiposyCausante::where('causante_id','=',$id,)->get();
+          $tiposCausantes = TiposyCausante::where('causante_id','=',$id)->get();
           return response()->json($tiposCausantes);
         }
   }
@@ -61,6 +61,7 @@ class IncidenciasController extends Controller
   //Inserta el nuevo handling con un id autoincremental y
   //retorna la vista del listado de handlings creados
   public function postCreate(Request $request){
+    $companias = Compania::where('estado','=','e')->get();
     $handling = Handling::where('nombre','=',$request->handling)->value('id');
     $causante = Causante::where('id','=',$request->causante)->value('nombre');
     $tipo = TiposCausante::where('id','=',$request->tipoCausante)->value('nombre');
@@ -84,7 +85,7 @@ class IncidenciasController extends Controller
     $insertedId = $incidencia->id;
     $resultado="Incidencia insertada con éxito";
     $incidencias = Incidencia::all();
-    return View('/coordinador/incidencias/indexincidencias', compact('resultado','incidencias'));
+    return View('/coordinador/incidencias/indexincidencias', compact('resultado','incidencias','companias'));
   }
   public function postCreateTecnico(Request $request){
     $handling = Handling::where('nombre','=',$request->handling)->value('id');
@@ -112,6 +113,47 @@ class IncidenciasController extends Controller
     $incidencias2 = Incidencia::where('usuario_id','=',$request->user()->id)->get();
     return View('/tecnicos/incidencias/indexincidencias', compact('resultado','incidencias2'));
   }
+
+  public function getEdit($id){
+      $resultado="";
+      $idcausante = Incidencia::where('id','=',$id)->value('causante_id');
+      $ncompania = Incidencia::where('id','=',$id)->value('compania');
+      $idcompania = Compania::where('nombre','=',$ncompania)->value('id');
+      $ntipo = Incidencia::where('id','=',$id)->value('tipoCausante');
+      $idtipo = TiposCausante::where('nombre','=',$ntipo)->value('id');
+      $companias = Compania::where('estado','=','e')->get();
+      $incidencia = Incidencia::findOrFail($id);
+      return View('/coordinador/incidencias/modificarIncidencia', compact('resultado',
+      'incidencia','id','companias','idcausante','idcompania','ncompania','ntipo', 'idtipo'));
+  }
+
+  public function putEdit(Request $request, $id){
+    $companias = Compania::where('estado','=','e')->get();
+    $handling = Handling::where('nombre','=',$request->handling)->value('id');
+    $causante = Causante::where('id','=',$request->causante)->value('nombre');
+    $tipo = TiposCausante::where('id','=',$request->tipoCausante)->value('nombre');
+    $compania = Compania::where('id','=',$request->compania)->value('nombre');
+    $incidencia = Incidencia::findOrFail($id);
+    $incidencia->usuario_id = $request->user()->id;
+    $incidencia->handling_id = $handling;
+    $incidencia->causante_id = $request->causante;
+    $incidencia->fechaHoraInicio = $request->fecha1;
+    $incidencia->fechaHoraFin = $request->fecha2;
+    $incidencia->ubicacion = $request->ubicacion;
+    $incidencia->compania = $request->compania;
+    $incidencia->handling = $request->handling;
+    $incidencia->causante = $causante;
+    $incidencia->tipoIncidencia = $request->tipoIncidencia;
+    $incidencia->tipoCausante = $tipo;
+    $incidencia->nTarjeta = $request->tarjeta;
+    $incidencia->observaciones = $request->observaciones;
+    $incidencia->solucion = $request->solucion;
+    $incidencia->save();
+    $incidencias = Incidencia::all();
+    $resultado="Incidencia Modificada con éxito";
+    return View('/coordinador/incidencias/indexincidencias', compact('resultado','incidencias','companias'));
+  }
+
   public function destroy($id){
     $incidencia = Incidencia::where('id','=',$id)->firstOrFail();
     $incidencia->delete();
